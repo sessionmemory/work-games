@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guess That Official - Game Play</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container game-container">
+        <header class="game-header">
+            <h1>🏛️ Guess That Official</h1>
+            <div class="game-controls">
+                <button id="next-question" class="btn btn-primary">🎲 Next Question</button>
+                <button id="reveal-answer" class="btn btn-secondary">👁️ Reveal Answer</button>
+                <button id="end-game" class="btn btn-danger">🏁 End Game</button>
+            </div>
+        </header>
+
+        <div class="game-layout">
+            <!-- Question Display Area -->
+            <div class="question-area">
+                <div id="question-container">
+                    <div class="question-prompt">
+                        <h2 id="question-text">Click "Next Question" to start!</h2>
+                    </div>
+                    
+                    <div id="photo-display" class="photo-container" style="display: none;">
+                        <img id="official-photo" src="" alt="Official Photo" />
+                    </div>
+
+                    <div id="options-container" class="options-grid" style="display: none;">
+                        <!-- Multiple choice options will be populated here -->
+                    </div>
+
+                    <div id="answer-input" class="answer-section" style="display: none;">
+                        <input type="text" id="answer-text" placeholder="Type the answer...">
+                        <div class="player-select">
+                            <label>Who answered?</label>
+                            <select id="answering-player">
+                                {% for player in leaderboard %}
+                                <option value="{{ player.name }}">{{ player.name }}</option>
+                                {% endfor %}
+                            </select>
+                            <button id="submit-answer" class="btn btn-success">✅ Correct!</button>
+                            <button id="wrong-answer" class="btn btn-warning">❌ Wrong</button>
+                        </div>
+                    </div>
+
+                    <div id="answer-reveal" class="answer-reveal" style="display: none;">
+                        <h3>✅ Correct Answer:</h3>
+                        <div id="correct-answer-text"></div>
+                        <div id="fun-fact" class="fun-fact"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Leaderboard Sidebar -->
+            <div class="leaderboard-area">
+                <h3>🏆 Leaderboard</h3>
+                <div id="leaderboard">
+                    {% for player in leaderboard %}
+                    <div class="player-score">
+                        <div class="player-name">{{ player.name }}</div>
+                        <div class="player-stats">
+                            <span class="score">{{ player.score }} pts</span>
+                            {% if player.streak > 1 %}
+                            <span class="streak">🔥 {{ player.streak }}</span>
+                            {% endif %}
+                            <span class="accuracy">{{ player.accuracy }}%</span>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+
+                <div class="game-stats">
+                    <h4>📈 Game Stats</h4>
+                    <div class="stat-row">Questions: <span id="question-count">0</span></div>
+                    <div class="stat-row">Players: <span>{{ game_stats.players_count }}</span></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Game Over Modal -->
+    <div id="game-over-modal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <h2>🎉 Game Over!</h2>
+            <div id="final-results"></div>
+            <div class="modal-actions">
+                <button id="new-game" class="btn btn-primary">🎮 New Game</button>
+                <a href="/" class="btn btn-outline">🏠 Home</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Pass game mode from setup
+        const gameMode = '{{ request.args.get("mode", "identify_official") }}';
+        const includeFakes = {{ 'true' if request.args.get("fakes") == 'true' else 'false' }};
+    </script>
+    <script src="{{ url_for('static', filename='js/game.js') }}"></script>
+</body>
+</html>

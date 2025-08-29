@@ -1,0 +1,227 @@
+---
+description: Project Requirements & Implementation Status template
+globs: 
+alwaysApply: false
+---
+# {PROJECT_NAME} - Project Requirements & Implementation Status
+
+## Current State: [NEW | MVP Complete | Production Ready ✅]
+**Status**: {Brief description of current implementation state}
+**Last Updated**: {Date}
+
+### Key Capabilities
+- **Feature 1**: {What actually works today}
+- **Feature 2**: {Current functionality status}
+- **Integration**: {What's connected and operational}
+
+## Project Overview
+**Location**: `/home/alex/code/digitalsynergy/{project-name}` or `/home/alex/code/local-apps/{project-name}`
+**Purpose**: {Clear problem statement and solution approach}
+**Target Users**: {Who this solves problems for}
+
+## Architecture Overview
+**Main Components**:
+- **Primary App**: `{main-file}.py` ({file-size}KB, {line-count} lines) - {description}
+- **Core Logic**: `{core-file}.py` ({file-size}KB, {line-count} lines) - {description}
+- **Configuration**: `{config-file}.json` ({file-size}KB) - {description}
+
+**Development Approach**:
+- **MVP-First Agile**: {Focus areas and iteration strategy}
+- **Resource Conscious**: {Target resource constraints}
+- **Integration Strategy**: {How it connects to Digital Synergy ecosystem}
+
+## Technology Stack
+### Backend
+- **Framework**: {Flask/FastAPI/etc} - {why chosen}
+- **Language**: Python 3.x with type hints
+- **Task Queue**: {Celery/etc if applicable}
+
+### Frontend (if applicable)
+- **Framework**: {React/Vanilla JS/etc} - {approach}
+- **Styling**: {CSS framework or approach}
+- **Build Tools**: {if any}
+
+### Storage & Database
+- **Primary**: {Supabase/PostgreSQL/etc}
+- **Caching**: {Redis/etc if applicable}
+- **File Storage**: {Local/S3/etc}
+
+### Integrations
+- **Supabase**: {If using supametabase Docker network}
+- **APIs**: {External services integrated}
+- **Docker Network**: {Network name if applicable}
+
+## Supabase Integration (if applicable)
+### Database Schema
+
+CREATE TABLE {table_name} (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    created_at TIMESTAMPTZ DEFAULT NOW(),
+    -- Add actual schema here
+);
+
+### Connection Pattern
+- **Network Access**: {Direct PostgREST/Python client/etc}
+- **Authentication**: {JWT/Direct network/etc}
+- **Fallback Strategy**: {JSON files/etc}
+
+## Notion Integration (if applicable)
+### Data Flow
+- **Source Database**: {Notion database ID and purpose}
+- **Sync Pattern**: {How data flows from Notion}
+- **Local Storage**: {How Notion data is cached locally}
+
+### API Usage
+```python
+# Notion integration pattern
+notion_client = NotionClient(token=NOTION_TOKEN)
+database = notion_client.databases.query(database_id=DATABASE_ID)
+```
+
+## Production Features & Capabilities
+### Core Features
+- [ ] **Feature 1**: {Implementation status and description}
+- [ ] **Feature 2**: {Implementation status and description}
+- [ ] **Authentication**: {Single user/multi-user/none}
+
+### Monitoring & Operations
+- [ ] **Health Checks**: {How system health is monitored}
+- [ ] **Logging**: {Logging strategy and file locations}
+- [ ] **Error Handling**: {Error tracking and recovery}
+
+### Performance & Scalability
+- **Resource Usage**: {Target CPU/Memory constraints}
+- **Caching Strategy**: {What's cached and for how long}
+- **Response Times**: {Target performance metrics}
+
+## API Endpoints (if applicable)
+### Core API Routes
+
+# Main application endpoints
+GET  /api/{resource}              # List/get resources
+POST /api/{resource}              # Create resource
+PUT  /api/{resource}/<id>         # Update resource
+DELETE /api/{resource}/<id>       # Delete resource
+
+# Health and monitoring
+GET  /api/health                  # Health check
+GET  /api/status                  # System status
+
+
+### Authentication Endpoints (if applicable)
+
+POST /api/auth/login              # User login
+POST /api/auth/logout             # User logout
+GET  /api/auth/status             # Auth status
+
+
+## File Organization
+{project-name}/
+├── {main-app}.py                 # Main application entry point
+├── requirements.txt              # Python dependencies
+├── .env-agent.txt               # Environment configuration (edit this)
+├── README.md                    # Project documentation
+├── PLAN.md                      # Development plan and milestones
+├── config/                      # Configuration files
+├── templates/ (if web app)      # HTML templates
+├── static/ (if web app)         # CSS, JS, images
+├── tests/                       # Test files
+├── docker-compose.yml (if applicable)
+└── .cursor/
+    └── rules/
+        └── project-requirements.mdc
+
+## Development Patterns & Conventions
+### Code Style
+- **Type Hints**: Extensive type hinting for all functions
+- **Error Handling**: Specific exceptions with clear error messages
+- **Logging**: Structured logging with appropriate levels
+- **Documentation**: Clear docstrings for all public functions
+
+### Digital Synergy Integration Patterns
+- **Supabase**: {Connection pattern used}
+- **Docker**: {If containerized, network and compose setup}
+- **Monitoring**: {How it integrates with Uptime Kuma/Glances}
+- **Environment**: {How .env-agent.txt is used}
+
+## Environment Configuration
+### Required Variables
+
+# .env-agent.txt template
+SECRET_KEY=your-secret-key-here
+{API_KEY}=your-api-key
+SUPABASE_URL=http://localhost:8001  # If using Supabase
+DEBUG=False  # Set to True for development
+
+
+### Optional Variables
+# Additional configuration
+{OPTIONAL_VAR}=default-value
+
+## Development Workflow
+### Setup Instructions
+1. **Environment Setup**: {Steps to get development environment running}
+2. **Dependencies**: `pip install -r requirements.txt`
+3. **Configuration**: Copy and edit `.env-agent.txt`
+4. **Database Setup**: {If database initialization needed}
+5. **First Run**: {How to start the application}
+
+### Testing Strategy
+- **Unit Tests**: {Testing approach and tools}
+- **Integration Tests**: {If applicable}
+- **Manual Testing**: {Key workflows to verify}
+
+## Deployment Strategy
+### Hosting Method
+- [ ] **SystemD Service**: For production deployment
+- [ ] **Docker Container**: For containerized deployment
+- [ ] **Development**: Direct Python execution
+
+### Production Considerations
+- **Port Configuration**: {Default port and conflicts}
+- **Resource Requirements**: {CPU/Memory needs}
+- **Dependencies**: {System-level dependencies}
+- **Monitoring**: {How to monitor in production}
+
+## Future Enhancement Ideas
+### Planned Features (Stage 2+)
+- **Enhancement 1**: {Description and priority}
+- **Enhancement 2**: {Description and priority}
+- **Integration Ideas**: {Potential future integrations}
+
+### Scalability Considerations
+- **Performance Optimization**: {Areas for future optimization}
+- **Architecture Evolution**: {How this might grow}
+- **Rule Specialization**: {When to break into specialized rule files}
+
+## Rule Evolution Roadmap
+### Stage 1 (Current): Single Rule File
+- Focus on core implementation and working features
+- Document actual technology choices and constraints
+- Establish basic patterns and conventions
+
+### Stage 2: Feature Expansion
+- Add implementation details for major features
+- Document API patterns and integration workflows
+- Update with real performance characteristics
+
+### Stage 3: Specialized Knowledge
+- Break into specialized rule files when complexity grows:
+  - `{project}-project-instructions.mdc` (overview)
+  - `{domain}-patterns.mdc` (core business logic)
+  - `{integration}-integration.mdc` (external connections)
+  - `deployment-{method}.mdc` (production patterns)
+
+## Additional Resources
+### Internal Documentation
+- **PLAN.md**: Development milestones and progress tracking
+- **README.md**: Setup and usage instructions
+- **API Documentation**: {If separate API docs exist}
+
+### Related Projects
+- **Similar Digital Synergy Projects**: {Reference implementations}
+- **Integration Partners**: {Related systems this connects to}
+
+### External Resources
+- **Technology Documentation**: {Key external docs for frameworks used}
+- **API References**: {For integrated services}

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guess That Official - Game Setup</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🏛️ Guess That Official</h1>
+            <p>The fun team game for government compliance professionals!</p>
+        </header>
+
+        <div class="game-setup">
+            <div class="stats-panel">
+                <h3>📊 Game Statistics</h3>
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <span class="stat-number">{{ stats.total_officials }}</span>
+                        <span class="stat-label">Total Officials</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">{{ stats.real_officials }}</span>
+                        <span class="stat-label">Real Officials</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">{{ stats.fake_photos }}</span>
+                        <span class="stat-label">Fake Photos</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="setup-panel">
+                <h3>🎮 Start New Game</h3>
+                
+                <div class="form-group">
+                    <label for="players">Team Members (one per line):</label>
+                    <textarea id="players" placeholder="Alex&#10;Sarah&#10;Mike&#10;Jennifer&#10;David&#10;Lisa&#10;Tom&#10;Rachel"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="game-mode">Game Mode:</label>
+                    <select id="game-mode">
+                        <option value="identify_official">Identify Official (Show photo → guess name)</option>
+                        <option value="find_photo">Find Photo (Show name → pick photo)</option>
+                        <option value="multiple_choice">Multiple Choice (Show photo → pick from 4 names)</option>
+                        <option value="mixed">Mixed Mode (Random question types)</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>
+                        <input type="checkbox" id="include-fakes"> Include fake photos for extra laughs
+                    </label>
+                </div>
+
+                <button id="start-game" class="btn btn-primary">🚀 Start Game</button>
+            </div>
+
+            {% if stats.total_officials == 0 %}
+            <div class="no-data-panel">
+                <h3>⚠️ No Officials Found</h3>
+                <p>You need to add some officials before you can play!</p>
+                <button id="create-sample" class="btn btn-secondary">📝 Create Sample Data</button>
+                <a href="/admin" class="btn btn-outline">⚙️ Add Officials Manually</a>
+            </div>
+            {% endif %}
+        </div>
+
+        <div class="quick-actions">
+            <a href="/admin" class="btn btn-outline">⚙️ Manage Officials</a>
+            <button id="test-question" class="btn btn-outline">🎲 Preview Question</button>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/setup.js') }}"></script>
+</body>
+</html>

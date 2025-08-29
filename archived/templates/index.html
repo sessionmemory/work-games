@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>[PROJECT_NAME] - Digital Synergy Solutions</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="nav-brand">
+                <h1>[PROJECT_NAME]</h1>
+                <span class="version">v0.1.0</span>
+            </div>
+            <div class="nav-links">
+                <a href="/">Dashboard</a>
+                <a href="/api/status" target="_blank">API</a>
+            </div>
+        </nav>
+    </header>
+
+    <main class="container">
+        <div class="hero">
+            <h2>Welcome to [PROJECT_NAME]</h2>
+            <p>[BRIEF_DESCRIPTION]</p>
+        </div>
+
+        <div class="content">
+            <div class="card">
+                <h3>Getting Started</h3>
+                <p>This is your new Flask web interface. Start building your features here!</p>
+                <div class="actions">
+                    <button class="btn btn-primary" onclick="testAPI()">Test API</button>
+                    <button class="btn btn-secondary" onclick="showInfo()">Show Info</button>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>System Status</h3>
+                <div id="status-display">
+                    <p>Loading...</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Digital Synergy Solutions. Built by Alex.</p>
+    </footer>
+
+    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+</body>
+</html> 

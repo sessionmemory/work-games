@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Guess That Official</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>⚙️ Admin Panel</h1>
+            <a href="/" class="btn btn-outline">🏠 Back to Game</a>
+        </header>
+
+        <div class="admin-layout">
+            <!-- Add New Official Form -->
+            <div class="admin-panel">
+                <h3>➕ Add New Official</h3>
+                <form id="add-official-form" enctype="multipart/form-data">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="official-name">Name *</label>
+                            <input type="text" id="official-name" name="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="official-position">Position *</label>
+                            <input type="text" id="official-position" name="position" 
+                                   placeholder="e.g., Secretary of State, Governor" required>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="official-state">State *</label>
+                            <select id="official-state" name="state" required>
+                                <option value="">Select State...</option>
+                                {% for state in states %}
+                                <option value="{{ state }}">{{ state }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="official-category">Category</label>
+                            <select id="official-category" name="category">
+                                {% for category in categories %}
+                                <option value="{{ category }}">{{ category.replace('_', ' ').title() }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="official-photo">Photo *</label>
+                        <input type="file" id="official-photo" name="photo" 
+                               accept="image/*" required>
+                        <small>Supported: JPG, PNG, GIF (will be optimized automatically)</small>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="official-fun-fact">Fun Fact</label>
+                        <textarea id="official-fun-fact" name="fun_fact" 
+                                  placeholder="Interesting fact to show after correct answers..."></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label>
+                            <input type="checkbox" id="is-fake" name="is_fake" value="true">
+                            This is a fake photo (not a real official)
+                        </label>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">💾 Add Official</button>
+                </form>
+            </div>
+
+            <!-- Current Officials List -->
+            <div class="officials-panel">
+                <h3>📋 Current Officials ({{ officials|length }})</h3>
+                
+                {% if officials|length == 0 %}
+                <div class="no-officials">
+                    <p>No officials added yet.</p>
+                    <button id="create-sample-data" class="btn btn-secondary">📝 Create Sample Data</button>
+                </div>
+                {% else %}
+                <div class="officials-list">
+                    {% for official in officials %}
+                    <div class="official-card">
+                        <div class="official-photo">
+                            <img src="{{ url_for('serve_photo', filename=official.photo_path.split('/')[-1]) }}" 
+                                 alt="{{ official.name }}" onerror="this.src='/static/images/placeholder.jpg'">
+                        </div>
+                        <div class="official-info">
+                            <h4>{{ official.name }}</h4>
+                            <p><strong>{{ official.position }}</strong></p>
+                            <p>{{ official.state }}</p>
+                            {% if official.fun_fact %}
+                            <p class="fun-fact">💡 {{ official.fun_fact }}</p>
+                            {% endif %}
+                            <div class="official-meta">
+                                <span class="category">{{ official.category }}</span>
+                                {% if official.is_fake %}
+                                <span class="fake-badge">🎭 FAKE</span>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- Status Messages -->
+        <div id="status-message" class="status-message" style="display: none;"></div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/admin.js') }}"></script>
+</body>
+</html>

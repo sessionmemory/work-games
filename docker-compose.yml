@@ -1,0 +1,38 @@
+version: '3.8'
+
+services:
+  app:
+    build: .
+    container_name: work-games
+    ports:
+      - "5200:5000"
+    environment:
+      - FLASK_ENV=${FLASK_ENV:-development}
+      - DEBUG=${DEBUG:-True}
+    volumes:
+      # Mount source code for development
+      - .:/app
+      # Persist data directory
+      - ./data:/app/data
+    restart: unless-stopped
+    
+    # Uncomment if you need a database
+    # depends_on:
+    #   - db
+  
+  # Uncomment if you need a database
+  # db:
+  #   image: postgres:15
+  #   container_name: ${PROJECT_NAME:-my_app}_db
+  #   environment:
+  #     POSTGRES_DB: ${DB_NAME:-app_db}
+  #     POSTGRES_USER: ${DB_USER:-app_user}
+  #     POSTGRES_PASSWORD: ${DB_PASSWORD:-secure_password}
+  #   volumes:
+  #     - db_data:/var/lib/postgresql/data
+  #   ports:
+  #     - "5432:5432"
+  #   restart: unless-stopped
+
+# volumes:
+#   db_data: 
